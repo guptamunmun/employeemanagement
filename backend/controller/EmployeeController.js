@@ -21,7 +21,7 @@ const createEmployee = async (req, res) => {
 
     await newEmployee.save();
 
-    let token= null;
+    let token ;
     if(newEmployee.role === "admin"){
         token = jwt.sign(
             {userId:newEmployee._id, role: newEmployee.role },
