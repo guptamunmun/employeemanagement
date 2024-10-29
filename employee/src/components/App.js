@@ -1,48 +1,28 @@
 
-// src/App.js
-import React, { useState } from 'react';
-import EmployeeList from './EmployeeList';
-import EmployeeForm from './EmployeeForm';
 
-function App() {
-  const [employees, setEmployees] = useState([]);
-  const [selectedEmployeeIndex, setSelectedEmployeeIndex] = useState(null);
+// src/App.jsx
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SignUpLogin from '../pages/SignUpLoginPage';
+import Dashboard from '../pages/Dashboard';
+import ProtectedRoute from './ProtectedRoute';
 
-  const handleAddOrEdit = (employee) => {
-    if (selectedEmployeeIndex !== null) {
-      const updatedEmployees = employees.map((emp, index) =>
-        index === selectedEmployeeIndex ? employee : emp
-      );
-      setEmployees(updatedEmployees);
-      setSelectedEmployeeIndex(null);
-    } else {
-      setEmployees([...employees, employee]);
-    }
-  };
-
-  const handleDelete = (index) => {
-    setEmployees(employees.filter((_, i) => i !== index));
-  };
-
-  const handleEdit = (index) => {
-    setSelectedEmployeeIndex(index);
-  };
-
+const App = () => {
   return (
-    <div className="App">
-      <h1>Employee Management System</h1>
-      <EmployeeForm
-        onSubmit={handleAddOrEdit}
-        selectedEmployee={employees[selectedEmployeeIndex]}
-      />
-      <EmployeeList
-        employees={employees}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-      />
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/login" element={<SignUpLogin />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
-
