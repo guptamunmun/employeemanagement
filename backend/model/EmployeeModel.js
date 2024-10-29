@@ -33,6 +33,7 @@ const userSchema = new Schema({
     type: String,
     enum: ['admin', 'employee', 'employer'], // You can add other roles as needed
     default: 'employee',
+    required: true
   },
   photo: {
     type: String, // Store the URL or file path of the photo
